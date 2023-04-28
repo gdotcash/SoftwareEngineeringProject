@@ -31,14 +31,14 @@ public class Controller
 		}
 	}
 	
-	public void displayCalender()
+	public void displayCalendar()
 	{
-		theUser.getMyCalender().display();
+		theUser.getMyCalendar().display();
 	}
 	
 	public void addEvent(String name, String start, String end)
 	{
-		theUser.getMyCalender().addEvent(name, start, end);
+		theUser.getMyCalendar().addEvent(name, start, end);
 	}
 	
 	public void displayLists()

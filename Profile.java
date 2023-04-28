@@ -26,8 +26,14 @@ public class Profile {
 	{
 		return this.userName;
 	}
+	
 	public boolean checkPass(String pass)
 	{
-		return this.password == pass;
+		return this.password.equals(pass);
+	}
+	
+	public Calendar getMyCalendar()
+	{
+		return this.myCalendar;
 	}
 }
