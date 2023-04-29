@@ -22,7 +22,9 @@ public class Day {
 		
 		this.events.remove(oldEvent);
 	}
-	
+	/*
+	 * 
+	 Not sure if we need this anymore due to the data validation in Calendar class for time. 
 	private boolean validateTime(int hour,int minute)
 	{
 		if(hour<0 || hour>24 || minute <0 || minute>59)
@@ -31,9 +33,9 @@ public class Day {
 		}
 		
 		
-		return false;
+		return true;
 	}
-
+	*/
 	public String display() {
 		// TODO Auto-generated method stub
 		return "";

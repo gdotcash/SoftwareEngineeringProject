@@ -89,7 +89,7 @@ public class main {
 				System.out.println("Adding New Event to Calender. ");
 				System.out.println("Enter event name: ");
 				name = keyboard.nextLine();
-				System.out.println("Time must be in DDMM24HR. Example: 01 10 1300 for October 1st at 1 pm. ");
+				System.out.println("Time must be in MMDD24HR. Example: 10 01 1300 for October 1st at 1 pm. ");
 				System.out.println("Enter event start time in: ");
 				start = keyboard.nextLine();
 				System.out.println("Enter event end time: ");

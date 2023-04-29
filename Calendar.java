@@ -24,8 +24,9 @@ public class Calendar {
 	
 	}
 	
-	public boolean addEvent(String key,String endTime)
+	public boolean addEvent(String name, String start, String end)
 	{
+		String key= start.
 		if(validateTime(key,endTime)==false)
 		{
 			return false;
