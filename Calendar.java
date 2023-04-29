@@ -1,4 +1,4 @@
-package scheduler;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,7 +26,7 @@ public class Calendar {
 	
 	public boolean addEvent(String name, String start, String end)
 	{
-		String key= name.replace(" ","")
+		String key= start.replace(" ", "") + "-" + end.replace(" ", "");
 		if(validateTime(key,endTime)==false)
 		{
 			return false;
