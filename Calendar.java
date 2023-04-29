@@ -26,7 +26,7 @@ public class Calendar {
 	
 	public boolean addEvent(String name, String start, String end)
 	{
-		String key= start.
+		String key= name.replace(" ","")
 		if(validateTime(key,endTime)==false)
 		{
 			return false;
@@ -37,15 +37,17 @@ public class Calendar {
 		int hour=Integer.parseInt(key.substring(4,6));
 		int minute=Integer.parseInt(key.substring(6,8));
 		//need to validate the time within the day class and validate the day. 
-		
+		return true;
 		
 	}
 	
+	/*
+	this endtime  string would be enough to make sure there is nothing that this event overlaps. it should create a string in the key format for endtime and then check all
+    the keys between those times and if there are no keys inbetween those times it returns true
+	needs to be the ability to check for the end time of previous events so that it isnt in the middle of something before it.
+	going to need to check the entry before it so that the previous endtime is not after the start time AND before the end time.
+	*/
 	
-	//this endtime  string would be enough to make sure there is nothing that this event overlaps. it should create a string in the key format for endtime and then check all
-	// the keys between those times and if there are no keys inbetween those times it returns true
-	//needs to be the ability to check for the end time of previous events so that it isnt in the middle of something before it.
-	//going to need to check the entry before it so that the previous endtime is not after the start time AND before the end time.
 	private boolean validateTime(String key,String endTime)
 	{
 		if(calendar.containsKey(key))
@@ -54,7 +56,7 @@ public class Calendar {
 		}
 		String [] arr= (String[]) keys.toArray();
 		Arrays.sort(arr);
-		//Arrays.
+		
 		
 		int month=Integer.parseInt(key.substring(0,2)); 
 		int day=Integer.parseInt(key.substring(2,4));
@@ -77,7 +79,7 @@ public class Calendar {
 	
 	private boolean validateMonthAndDay(int month, int day)
 	{
-		if(month<1 || month>12 ||day < 1 || day > 31)
+		if(month<1 || month>12 || day < 1 || day > 31)
 		{
 			return false;
 		}
