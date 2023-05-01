@@ -48,7 +48,7 @@ public class Calendar {
 	going to need to check the entry before it so that the previous endtime is not after the start time AND before the end time.
 	*/
 	
-	private boolean validateTime(String key,String endTime)
+	private boolean validateTime(String key)
 	{
 		if(calendar.containsKey(key))
 		{
@@ -56,14 +56,30 @@ public class Calendar {
 		}
 		String [] arr= (String[]) keys.toArray();
 		Arrays.sort(arr);
+	
 		
 		
-		int month=Integer.parseInt(key.substring(0,2)); 
-		int day=Integer.parseInt(key.substring(2,4));
-		int hour=Integer.parseInt(key.substring(4,6));
-		int minute=Integer.parseInt(key.substring(6,8));
-		if(validateMonthAndDay(month,day) && validate24HTime(hour,minute))
-			return true;
+		String startTime=key.substring(0,8);
+		String endTime=key.substring(9);
+		
+		if(validateMonthAndDay(startTime,endTime)
+			{
+				int index=0;
+				keys.add(key);
+				String [] arr= (String[]) keys.toArray();
+				Arrays.sort(arr);
+				for(int i=0; i<arr.length();i++)
+				{
+					if(arr[i].equals(key))
+					{
+						index=i;
+						
+					}
+				}
+				
+				return true;
+			}
+		
 		
 		return false;
 	}
@@ -77,12 +93,33 @@ public class Calendar {
 		return true;
 	}
 	
-	private boolean validateMonthAndDay(int month, int day)
+	private boolean validateMonthAndDay(String start, String end)
 	{
-		if(month<1 || month>12 || day < 1 || day > 31)
+		int month=Integer.parseInt(start.substring(0,2)); 
+		int day=Integer.parseInt(start.substring(2,4));
+		int hour=Integer.parseInt(start.substring(4,6));
+		int minute=Integer.parseInt(start.substring(6,8));
+		
+		int endMonth=Integer.parseInt(end.substring(0,2));
+		int endDay=Integer.parseInt(end.substring(2,4));
+		int endHour=Integer.parseInt(end.substring(4,6));
+		int endMinute=Integer.parseInt(end.substring(6,8));
+		
+		if(validate24HTime(hour,minute)==false || validate24HTime(endHour,endMinute)==false)
 		{
 			return false;
 		}
+		
+		if(month<1 || month>12 || day < 1 || day > 31 || endMonth!=month || endDay!=day)
+		{
+			return false;
+		} 
+		
+		if(endHour<hour || (endHour==hour && endMinute<minute))
+		{
+			return false;
+		}
+		
 		switch(month)
 		{
 			case 2:
@@ -96,6 +133,9 @@ public class Calendar {
 					return false;
 				}
 		}
+		
+		
+		
 		return true;
 			
 	}
