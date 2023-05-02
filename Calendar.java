@@ -27,15 +27,11 @@ public class Calendar {
 	public boolean addEvent(String name, String start, String end)
 	{
 		String key= start.replace(" ", "") + "-" + end.replace(" ", "");
-		if(validateTime(key,endTime)==false)
+		if(validateTime(key)==false)
 		{
 			return false;
 		}
-		keys.add(key);
-		int month=Integer.parseInt(key.substring(0,2)); //grabs the first 2 digits of the string and returns it as an int
-		int day=Integer.parseInt(key.substring(2,4));
-		int hour=Integer.parseInt(key.substring(4,6));
-		int minute=Integer.parseInt(key.substring(6,8));
+		
 		//need to validate the time within the day class and validate the day. 
 		return true;
 		
@@ -50,33 +46,51 @@ public class Calendar {
 	
 	private boolean validateTime(String key)
 	{
+		//if the identical key is there, return false
 		if(calendar.containsKey(key))
 		{
 			return false;
 		}
-		String [] arr= (String[]) keys.toArray();
-		Arrays.sort(arr);
-	
 		
-		
+		//Strings are formatted DDMMHHMM-DDMMHHMM
 		String startTime=key.substring(0,8);
 		String endTime=key.substring(9);
-		
+		//checking that the events start time is not after its end time, and that the months and days are real
 		if(validateMonthAndDay(startTime,endTime)
 			{
-				int index=0;
+				int indexOfKey=0;
 				keys.add(key);
 				String [] arr= (String[]) keys.toArray();
 				Arrays.sort(arr);
+				//putting the keys into a sorted array will show me the event before and after our desired scheduled time
 				for(int i=0; i<arr.length();i++)
 				{
 					if(arr[i].equals(key))
 					{
-						index=i;
-						
+						indexOfKey=i;
+						break;
 					}
 				}
-				
+				//need to check that the end time of the previous event does not exceed the start time of the new event
+				if(indexOfKey!=0)
+				{
+					String endTimeOfPrev=arr[indexOfKey-1].substring(9);
+					if(validateMonthAndDay(endTimeOfPrev,startTime)==false)
+					{
+						return false;
+					}
+				}
+			
+				//checking that the end time of the new event is not after the start time of the next event
+				if(arr.length()>=indexOfKey + 1)
+				{
+					int startOfNext=arr[indexOfKey + 1].substring(8);
+					if(validateMonthAndDay(key.substring(8), arr[indexOfKey + 1].substring(8))==false)
+					{
+						return false;
+					}
+				}
+				//if all of these pass, we return true
 				return true;
 			}
 		
