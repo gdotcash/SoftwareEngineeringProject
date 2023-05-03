@@ -21,7 +21,12 @@ public class Day {
 	public void addEvent(String startTime, String endTime, String name)
 	{
 		String key= start.replace(" ", "") + "-" + end.replace(" ", "");
-		validateTime(key);
+		if(validateTime(key)==false)
+		{
+			return;
+		}
+		
+		
 	}
 	//needs updated
 	public void removeEvent(Event oldEvent)
@@ -41,8 +46,8 @@ public class Day {
 		}
 		
 		//Strings are formatted DDMMHHMM-DDMMHHMM
-		String startTime=key.substring(4,8);
-		String endTime=key.substring(13);
+		String startTime=key.substring(0,8);
+		String endTime=key.substring(9);
 		//checking that the events start time is not after its end time, and that the months and days are real
 		
 		if(validateMonthAndDay())
