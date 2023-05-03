@@ -27,13 +27,22 @@ public class Calendar {
 	public boolean addEvent(String name, String start, String end)
 	{
 		String key= start.replace(" ", "") + "-" + end.replace(" ", "");
-		if(validateTime(key)==false)
+		String startTime=key.substring(0,8);
+		String endTime=key.substring(9);
+		String dayKey=key.substring(0,4);
+		
+		
+		if(validateTime(key,name)==false)
 		{
 			return false;
 		}
-		
+		if(this.calendar.get(dayKey).addEvent(startTime,endTime,name)==true)
+		{
+			return true;
+		}
+		return false;
 		//need to validate the time within the day class and validate the day. 
-		return true;
+		
 		
 	}
 	
@@ -44,57 +53,32 @@ public class Calendar {
 	going to need to check the entry before it so that the previous endtime is not after the start time AND before the end time.
 	*/
 	
-	private boolean validateTime(String key)
+	private boolean validateTime(String key, String name)
 	{
-		//if the identical key is there, return false
-		if(calendar.containsKey(key))
-		{
-			return false;
-		}
 		
 		//Strings are formatted DDMMHHMM-DDMMHHMM
 		String startTime=key.substring(0,8);
 		String endTime=key.substring(9);
-		//checking that the events start time is not after its end time, and that the months and days are real
-		if(validateMonthAndDay(startTime,endTime)
+		String dayKey=key.substring(0,4);
+		if(this.calendar.containsKey(dayKey)==false)
+		{
+			if(validateMonthAndDay(startTime,endTime)==false)
 			{
-				int indexOfKey=0;
-				keys.add(key);
-				String [] arr= (String[]) keys.toArray();
-				Arrays.sort(arr);
-				//putting the keys into a sorted array will show me the event before and after our desired scheduled time
-				for(int i=0; i<arr.length();i++)
-				{
-					if(arr[i].equals(key))
-					{
-						indexOfKey=i;
-						break;
-					}
-				}
-				//need to check that the end time of the previous event does not exceed the start time of the new event
-				if(indexOfKey!=0)
-				{
-					String endTimeOfPrev=arr[indexOfKey-1].substring(9);
-					if(validateMonthAndDay(endTimeOfPrev,startTime)==false)
-					{
-						return false;
-					}
-				}
-			
-				//checking that the end time of the new event is not after the start time of the next event
-				if(arr.length()>=indexOfKey + 1)
-				{
-					int startOfNext=arr[indexOfKey + 1].substring(8);
-					if(validateMonthAndDay(key.substring(8), arr[indexOfKey + 1].substring(8))==false)
-					{
-						return false;
-					}
-				}
-				//if all of these pass, we return true
-				return true;
+				return false;
 			}
-		
-		
+			addDay(dayKey);
+			return true;
+		}
+		if(this.calendar.containsKey(dayKey)==true)
+		{
+			if(validateMonthAndDay(startTime,endTime==false))
+			{
+				return false;
+			}
+			return true;
+		}
+
+	
 		return false;
 	}
 	
@@ -154,10 +138,15 @@ public class Calendar {
 			
 	}
 	
-	private void addDay(String day,Event newEvent)
+	private void addDay(String day)
 	{
 		
-		//day start time end time name of event is going to be passed
+		
+		Day newDay= new Day();
+		
+		this.calendar.put(day,newDay);
+		
+		
 	}
 	
 
